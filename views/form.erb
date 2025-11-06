@@ -1,0 +1,126 @@
+<% if @job_id && @error_msg.nil? %>
+  <div class="alert alert-success alert-dismissible mx-1 mb-0">
+    Job was successfully submitted (Job ID is <%= @job_id %>).
+    <% if @conf.key?("cluster") && @conf["cluster"].size > 1 %>
+    Go to the <a href="./history?cluster=<%= @cluster_name %>">History page</a>.
+    <% else %>
+    Go to the <a href="./history">History page</a>.
+    <% end %>
+    <button class="btn-close" data-bs-dismiss="alert"></button>
+  </div>
+<% elsif @error_msg %>
+  <div class="alert alert-warning alert-dismissible mx-1 mb-0">
+    Job submission failed. (<%= @error_msg %>)
+    <button class="btn-close" data-bs-dismiss="alert"></button>
+  </div>
+<% end %>
+
+<form action="<%= @current_path %>" method="post" onsubmit="return ocForm.submitEffect();">
+  <div class="row px-3 text-white">
+    <!-- Application Info Section -->
+    <div class="col pt-2 bg-gradient" style="background:<%= @conf['description_color'] %>; color: white;">
+      <h3>
+        <a href="<%= @script_name %>/<%= @manifest['dirname'] %>" class="fw-semibold" style="color: inherit; text-decoration: none;">
+          <%= @manifest['name'] %>
+        </a>
+      </h3>
+      <input type="hidden" name="<%= JOB_APP_NAME %>" value="<%= @manifest['name'] %>">
+      <input type="hidden" name="<%= JOB_APP_PATH %>" value="<%= @path_info %>">
+      <p><%= @manifest['description'] %></p>
+    </div>
+
+    <!-- Header -->
+    <div class="col pt-2 pb-0 bg-gradient" style="background: <%= @conf['description_color'] %>;">
+      <%= output_header(@body, @header) %>
+    </div>
+  </div>
+
+  <div id="<%= FORM_LAYOUT %>" class="row row-cols-1 row-cols-lg-2 mx-1 bg-gradient" style="background: <%= @conf['form_color'] %>;">
+    <!-- Form Body -->
+    <div class="col py-3">
+      <%= output_body(@body, @header) %>
+    </div>
+
+    <!-- Script Content Section -->
+    <div class="col py-3 d-flex flex-column">
+      <label id="label_<%= SCRIPT_CONTENT %>" class="fw-semibold" for="<%= SCRIPT_CONTENT %>"><%= @script_label %></label>
+      <textarea id="<%= SCRIPT_CONTENT %>" name="<%= SCRIPT_CONTENT %>" class="form-control mt-1 mb-3 flex-grow-1" tabindex="<%= @table_index %>" accesskey="s" oninput="ocForm.updateHeight()" required>
+        (Something wrong)
+      </textarea>
+      <!-- Submit Button -->
+      <input type="submit" class="btn btn-primary d-block w-100" id="<%= SUBMIT_BUTTON %>" value="Submit" tabindex="<%= @table_index + 1 %>">
+    </div>
+  </div>
+</form>
+<script>
+var ocForm = ocForm || {};
+ocForm.textArea = document.getElementById('<%= SCRIPT_CONTENT %>');
+</script>
+<script src="form.js"></script>
+<script>
+// Executes functions that should run once.
+ocForm.onceExec = function() {
+<%= @js["once"].chomp %>
+};
+
+// Initialize dynamic form widgets.
+ocForm.initDynamicWidget = function(fromId) {
+<%= @js["init_dw"].lines.map(&:chomp).sort.uniq.join("\n") %>
+};
+
+// Execute dynamic form widgets.
+ocForm.execDynamicWidget = function(fromId) {
+<%= @js["exec_dw"].chomp %>
+};
+
+// Update the commands.
+ocForm.updateContents = function(selectedValues) {
+<%= @js["script"].chomp %>
+};
+
+// Check if a cache file exists.
+ocForm.isCacheFile = function() {
+  return <%= @script_content != nil %>;
+};
+
+// Load cache file contents.
+// Since @script_content uses escape_html() in ruby, it is converted using textarea to decode.
+ocForm.loadCacheFile = function() {
+  const textarea = document.createElement('textarea');
+  textarea.innerHTML = <%= @script_content.to_json %>;
+  return textarea.value;
+};
+
+// Prevent default behavior for Enter key unless specific elements are focused.
+document.addEventListener('keydown', function(event) {
+  if (event.key === 'Enter' && (event.target.id !== '<%= SCRIPT_CONTENT %>' && event.target.id !== '_submitButton')) {
+    event.preventDefault();
+  }
+});
+
+ocForm.isFirst = true;
+ocForm.multiSelectDisabledIndexes = {};
+ocForm.updateValues = function(fromId) {
+  let selectedValues = [];
+  ocForm.initDynamicWidget(fromId);
+  ocForm.execDynamicWidget(fromId);
+
+  if (ocForm.isFirst) {
+    ocForm.isFirst = false;
+    ocForm.onceExec();
+    ocForm.updateContents(selectedValues);
+    ocForm.textArea.value = ocForm.isCacheFile() ? ocForm.loadCacheFile() : Object.values(selectedValues).join('\n');
+  }
+  else {
+    ocForm.updateContents(selectedValues);
+    ocForm.textArea.value = Object.values(selectedValues).join('\n');
+  }
+
+  // Add a newline if it is not the last one
+  if (!ocForm.textArea.value.endsWith('\n')){
+    ocForm.textArea.value += '\n';
+  }
+  ocForm.updateHeight();
+};
+window.onload = ocForm.updateValues();
+</script>

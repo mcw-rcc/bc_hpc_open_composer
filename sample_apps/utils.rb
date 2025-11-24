@@ -71,15 +71,15 @@ def header(check_script_content = false, appname = nil)
     YAML
   elsif appname == "Slurm"
     yaml << <<-YAML
-  _cluster_name:
-    widget: select
-    label: Cluster name
-    required: true
-    direction: horizontal
-    value: fugaku
-    options:
-      - [ Prepost, Prepost, hide-_cluster_name ]
-YAML
+      _cluster_name:
+        widget: select
+        label: Cluster name
+        required: true
+        direction: horizontal
+        value: fugaku
+        options:
+          - [ Prepost, Prepost, hide-_cluster_name ]
+    YAML
   end
       
   return yaml

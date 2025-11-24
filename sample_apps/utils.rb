@@ -355,17 +355,17 @@ def fugaku_common(rsc_group, enable_threads = true, check_script_content = false
     # Not required
   elsif rsc_group != "single" && enable_threads
     check << <<-YAML
-  nodes   = @nodes_procs_threads_1
-  procs   = @nodes_procs_threads_2
-  threads = @nodes_procs_threads_3
-  oc_assert(nodes * 48 >= procs * threads, 'The condition "nodes * 48 >= procs * threads" is not met.')
-YAML
+    nodes   = @nodes_procs_threads_1
+    procs   = @nodes_procs_threads_2
+    threads = @nodes_procs_threads_3
+    oc_assert(nodes * 48 >= procs * threads, 'The condition "nodes * 48 >= procs * threads" is not met.')
+    YAML
   elsif rsc_group != "single" && !enable_threads
     check << <<-YAML
-  nodes   = @nodes_procs_1
-  procs   = @nodes_procs_2
-  oc_assert(nodes * 48 >= procs, 'The condition "nodes * 48 >= procs" is not met.')
-YAML
+    nodes   = @nodes_procs_1
+    procs   = @nodes_procs_2
+    oc_assert(nodes * 48 >= procs, 'The condition "nodes * 48 >= procs" is not met.')
+    YAML
   end
   
   return form.chomp, header(check_script_content, app_name).chomp, script.chomp, check.chomp, submit.chomp

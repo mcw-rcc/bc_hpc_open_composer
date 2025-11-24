@@ -87,9 +87,9 @@ end
 
 def submit()
   <<-BASH
-  #!/bin/bash
-  OC_SUBMIT_OPTIONS=\"--no-check-directory\"
-BASH
+    #!/bin/bash
+    OC_SUBMIT_OPTIONS=\"--no-check-directory\"
+  BASH
 end
 
 def form_rsc_group(rsc_group, enable_threads)

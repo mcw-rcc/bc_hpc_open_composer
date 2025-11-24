@@ -41,44 +41,44 @@ end
 
 def header(check_script_content = false, appname = nil)
   yaml = <<-YAML
-    _script_location:
-      widget:     path
-      value:      #{default_dir()}
-      label:      Script Location
-      show_files: false
-      required:   true
-      #{favorites()}
+  _script_location:
+    widget:     path
+    value:      #{default_dir()}
+    label:      Script Location
+    show_files: false
+    required:   true
+    #{favorites()}
 
-    _script:
-      widget:   text
-      size :    2
-      label:    [Script Name, Job Name]
-      value:    [job.sh, ""]
-      required: [true, false]
+  _script:
+    widget:   text
+    size :    2
+    label:    [Script Name, Job Name]
+    value:    [job.sh, ""]
+    required: [true, false]
   YAML
 
   if appname == "OpenFOAM"
     yaml << <<-YAML
-      _cluster_name:
-        widget: select
-        label: Cluster name
-        required: true
-        direction: horizontal
-        value: fugaku
-        options:
-          - [ Fugaku,  "linux-rhel8-a64fx", enable-rsc_group, enable-nodes_procs, enable-time, enable-group, enable-show_advanced_option, enable-mode, enable-mail_option, enable-mail, emable-stat, enable-stat_file_name, enable-gfscache ]
-          - [ Prepost, "linux-rhel8-cascadelake", enable-prepost_partiton, enable-prepost_time, enable-prepost_cores, enable-prepost_memory ]
+    _cluster_name:
+      widget: select
+      label: Cluster name
+      required: true
+      direction: horizontal
+      value: fugaku
+      options:
+        - [ Fugaku,  "linux-rhel8-a64fx", enable-rsc_group, enable-nodes_procs, enable-time, enable-group, enable-show_advanced_option, enable-mode, enable-mail_option, enable-mail, emable-stat, enable-stat_file_name, enable-gfscache ]
+        - [ Prepost, "linux-rhel8-cascadelake", enable-prepost_partiton, enable-prepost_time, enable-prepost_cores, enable-prepost_memory ]
     YAML
   elsif appname == "Slurm"
     yaml << <<-YAML
-      _cluster_name:
-        widget: select
-        label: Cluster name
-        required: true
-        direction: horizontal
-        value: fugaku
-        options:
-          - [ Prepost, Prepost, hide-_cluster_name ]
+    _cluster_name:
+      widget: select
+      label: Cluster name
+      required: true
+      direction: horizontal
+      value: fugaku
+      options:
+        - [ Prepost, Prepost, hide-_cluster_name ]
     YAML
   end
       
@@ -87,8 +87,8 @@ end
 
 def submit()
   <<-BASH
-    #!/bin/bash
-    OC_SUBMIT_OPTIONS=\"--no-check-directory\"
+  #!/bin/bash
+  OC_SUBMIT_OPTIONS=\"--no-check-directory\"
   BASH
 end
 
@@ -135,7 +135,7 @@ def threads()
     step:   1
     label: "Threads (1 - 48)"
     required: true
-YAML
+  YAML
 end
 
 def nodes_procs()

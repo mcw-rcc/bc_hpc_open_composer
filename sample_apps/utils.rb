@@ -59,28 +59,27 @@ def header(check_script_content = false, appname = nil)
 
   if appname == "OpenFOAM"
     yaml << <<-YAML
-      _cluster_name:
-        widget: select
-        label: Cluster name
-        required: true
-        direction: horizontal
-        value: fugaku
-        options:
-          - [ Fugaku,  "linux-rhel8-a64fx", enable-rsc_group, enable-nodes_procs, enable-time, enable-group, enable-show_advanced_option, enable-mode, enable-mail_option, enable-mail, emable-stat, enable-stat_file_name, enable-gfscache ]
-          - [ Prepost, "linux-rhel8-cascadelake", enable-prepost_partiton, enable-prepost_time, enable-prepost_cores, enable-prepost_memory ]
-    YAML
-
+  _cluster_name:
+    widget: select
+    label: Cluster name
+    required: true
+    direction: horizontal
+    value: fugaku
+    options:
+      - [ Fugaku,  "linux-rhel8-a64fx", enable-rsc_group, enable-nodes_procs, enable-time, enable-group, enable-show_advanced_option, enable-mode, enable-mail_option, enable-mail, emable-stat, enable-stat_file_name, enable-gfscache ]
+      - [ Prepost, "linux-rhel8-cascadelake", enable-prepost_partiton, enable-prepost_time, enable-prepost_cores, enable-prepost_memory ]
+YAML
   elsif appname == "Slurm"
     yaml << <<-YAML
-      _cluster_name:
-        widget: select
-        label: Cluster name
-        required: true
-        direction: horizontal
-        value: fugaku
-        options:
-          - [ Prepost, Prepost, hide-_cluster_name ]
-    YAML
+  _cluster_name:
+    widget: select
+    label: Cluster name
+    required: true
+    direction: horizontal
+    value: fugaku
+    options:
+      - [ Prepost, Prepost, hide-_cluster_name ]
+YAML
   end
       
   return yaml
@@ -88,22 +87,22 @@ end
 
 def submit()
   <<-BASH
-    #!/bin/bash
-    OC_SUBMIT_OPTIONS=\"--no-check-directory\"
-  BASH
+  #!/bin/bash
+  OC_SUBMIT_OPTIONS=\"--no-check-directory\"
+BASH
 end
 
 def form_rsc_group(rsc_group, enable_threads)
   yaml = <<-YAML
-    rsc_group:
-      widget: select
-      direction: horizontal
-      label: Resource group
-      required: true
-      value: small
-      help: See <a target="_blank" href="https://www.fugaku.r-ccs.riken.jp/en/resource_group_config">Resource group configuration</a> for details.
-      options:
-  YAML
+  rsc_group:
+    widget: select
+    direction: horizontal
+    label: Resource group
+    required: true
+    value: small
+    help: See <a target="_blank" href="https://www.fugaku.r-ccs.riken.jp/en/resource_group_config">Resource group configuration</a> for details.
+    options:
+YAML
 
   prefix = enable_threads ? "nodes_procs_threads" : "nodes_procs"
   if rsc_group == "small_and_large"

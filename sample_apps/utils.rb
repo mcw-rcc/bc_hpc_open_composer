@@ -94,15 +94,15 @@ end
 
 def form_rsc_group(rsc_group, enable_threads)
   yaml = <<-YAML
-    rsc_group:
-      widget: select
-      direction: horizontal
-      label: Resource group
-      required: true
-      value: small
-      help: See <a target="_blank" href="https://www.fugaku.r-ccs.riken.jp/en/resource_group_config">Resource group configuration</a> for details.
-      options:
-  YAML
+  rsc_group:
+    widget: select
+    direction: horizontal
+    label: Resource group
+    required: true
+    value: small
+    help: See <a target="_blank" href="https://www.fugaku.r-ccs.riken.jp/en/resource_group_config">Resource group configuration</a> for details.
+    options:
+YAML
 
   prefix = enable_threads ? "nodes_procs_threads" : "nodes_procs"
   if rsc_group == "small_and_large"

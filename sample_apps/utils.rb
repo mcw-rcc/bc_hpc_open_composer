@@ -41,21 +41,21 @@ end
 
 def header(check_script_content = false, appname = nil)
   yaml = <<-YAML
-  _script_location:
-    widget:     path
-    value:      #{default_dir()}
-    label:      Script Location
-    show_files: false
-    required:   true
-    #{favorites()}
+    _script_location:
+      widget:     path
+      value:      #{default_dir()}
+      label:      Script Location
+      show_files: false
+      required:   true
+      #{favorites()}
 
-  _script:
-    widget:   text
-    size :    2
-    label:    [Script Name, Job Name]
-    value:    [job.sh, ""]
-    required: [true, false]
-YAML
+    _script:
+      widget:   text
+      size :    2
+      label:    [Script Name, Job Name]
+      value:    [job.sh, ""]
+      required: [true, false]
+  YAML
 
   if appname == "OpenFOAM"
     yaml << <<-YAML
@@ -87,22 +87,22 @@ end
 
 def submit()
   <<-BASH
-    #!/bin/bash
-    OC_SUBMIT_OPTIONS=\"--no-check-directory\"
-  BASH
+  #!/bin/bash
+  OC_SUBMIT_OPTIONS=\"--no-check-directory\"
+BASH
 end
 
 def form_rsc_group(rsc_group, enable_threads)
   yaml = <<-YAML
-    rsc_group:
-      widget: select
-      direction: horizontal
-      label: Resource group
-      required: true
-      value: small
-      help: See <a target="_blank" href="https://www.fugaku.r-ccs.riken.jp/en/resource_group_config">Resource group configuration</a> for details.
-      options:
-  YAML
+  rsc_group:
+    widget: select
+    direction: horizontal
+    label: Resource group
+    required: true
+    value: small
+    help: See <a target="_blank" href="https://www.fugaku.r-ccs.riken.jp/en/resource_group_config">Resource group configuration</a> for details.
+    options:
+YAML
 
   prefix = enable_threads ? "nodes_procs_threads" : "nodes_procs"
   if rsc_group == "small_and_large"

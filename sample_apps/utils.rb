@@ -429,8 +429,9 @@ def radio(key, label, options, value = nil, help = nil, required = true, indent 
     direction: horizontal
     required: #{required ? "true" : "false"}
     options:
-#{output_options(options, value)}
-YAML
+  #{output_options(options, value)}
+  YAML
+
   form << "    label:  #{label}\n"  if label
   form << "    value:  #{value}\n"  if value
   form << "    help:   #{help}\n"   if help
@@ -446,8 +447,9 @@ def checkbox(key, label, options, value = nil, help = nil, required = true, inde
     direction: horizontal
     required: #{required ? "true" : "false"}
     options:
-#{output_options(options, value)}
-YAML
+  #{output_options(options, value)}
+  YAML
+
   form << "    label:  #{label}\n"  if label
   form << "    value:  #{value}\n"  if value
   form << "    help:   #{help}\n"   if help
@@ -463,8 +465,9 @@ def path(key, label, help = nil, required = true, indent = nil, show_files = tru
     value: #{default_dir()}
     show_files: #{show_files ? "true" : "false"}
     required: #{required ? "true" : "false"}
-    #{favorites()}
-YAML
+  #{favorites()}
+  YAML
+
   form << "    label:  #{label}\n"      if label
   form << "    help:   #{help}\n"       if help
   form << "    indent: #{indent}\n"     if indent

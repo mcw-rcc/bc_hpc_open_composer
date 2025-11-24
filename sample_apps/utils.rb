@@ -150,7 +150,7 @@ def nodes_procs()
     label: [ "Nodes (1 - 384)", "Procs (1 - 18,432)" ]
     required: [ true, true ]
     help: "\\"Nodes x 48 >= Procs\\" must hold."
-YAML
+  YAML
 end
 
 def nodes_procs_threads()
@@ -165,7 +165,7 @@ def nodes_procs_threads()
     label: [ "Nodes (1 - 384)", "Procs (1 - 18,432)", "Threads (1 - 48)" ]
     required: [ true, true, true ]
     help: "\\"Nodes x 48 >= Procs x Threads\\" must hold."
-YAML
+  YAML
 end
 
 def prepost_common()
@@ -202,7 +202,7 @@ def prepost_common()
     min: 5
     value: 5
     required: true
-YAML
+  YAML
 end
 
 def fugaku_common(rsc_group, enable_threads = true, check_script_content = false, app_name = nil)
@@ -232,7 +232,8 @@ def fugaku_common(rsc_group, enable_threads = true, check_script_content = false
     label: Group
     required: true
     options:
-YAML
+  YAML
+
   groups = `groups`.split - EXCLUDED_GROUPS
   groups.each do |g|
     form << "      - [\"" + g + "\" , \"" + g + "\"]\n" unless g.start_with?("isv")
@@ -307,7 +308,7 @@ YAML
       - ["/vol0005", "/vol0005"]
       - ["/vol0006", "/vol0006"]
     help: "If you use spack, you may need /vol0004."
-YAML
+  YAML
 
   script = "  #!/bin/bash\n"
   script << "  #PJM -L \"rscgrp=\#{rsc_group}\"\n"
@@ -331,7 +332,7 @@ YAML
   #PJM \#{stat}
   #PJM --spath \#{stat_file_name}
   #PJM -x PJM_LLIO_GFSCACHE=\#{gfscache}
-YAML
+  YAML
   script << "  set -e\n" unless app_name == "OpenFOAM"
 
   if rsc_group == "single" && enable_threads
@@ -348,7 +349,7 @@ YAML
   oc_assert((@rsc_group != "f-pt"       || @time_1 != 24) || @time_2 <= 0, message)
   oc_assert((@rsc_group != "spot-small" || @time_1 !=  4) || @time_2 <= 0, message)
   oc_assert((@rsc_group != "spot-large" || @time_1 !=  4) || @time_2 <= 0, message)
-YAML
+  YAML
 
   if rsc_group == "single" && enable_threads
     # Not required

@@ -59,16 +59,17 @@ def header(check_script_content = false, appname = nil)
 
   if appname == "OpenFOAM"
     yaml << <<-YAML
-  _cluster_name:
-    widget: select
-    label: Cluster name
-    required: true
-    direction: horizontal
-    value: fugaku
-    options:
-      - [ Fugaku,  "linux-rhel8-a64fx", enable-rsc_group, enable-nodes_procs, enable-time, enable-group, enable-show_advanced_option, enable-mode, enable-mail_option, enable-mail, emable-stat, enable-stat_file_name, enable-gfscache ]
-      - [ Prepost, "linux-rhel8-cascadelake", enable-prepost_partiton, enable-prepost_time, enable-prepost_cores, enable-prepost_memory ]
-YAML
+      _cluster_name:
+        widget: select
+        label: Cluster name
+        required: true
+        direction: horizontal
+        value: fugaku
+        options:
+          - [ Fugaku,  "linux-rhel8-a64fx", enable-rsc_group, enable-nodes_procs, enable-time, enable-group, enable-show_advanced_option, enable-mode, enable-mail_option, enable-mail, emable-stat, enable-stat_file_name, enable-gfscache ]
+          - [ Prepost, "linux-rhel8-cascadelake", enable-prepost_partiton, enable-prepost_time, enable-prepost_cores, enable-prepost_memory ]
+    YAML
+
   elsif appname == "Slurm"
     yaml << <<-YAML
   _cluster_name:

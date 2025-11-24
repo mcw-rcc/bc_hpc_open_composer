@@ -411,7 +411,7 @@ def select(key, label, options, value = nil, help = nil, required = true, indent
     widget: select
     required: #{required ? "true" : "false"}
     options:
-  #{output_options(options, value)}
+    #{output_options(options, value)}
   YAML
 
   form << "    label:  #{label}\n"  if label
@@ -429,7 +429,7 @@ def radio(key, label, options, value = nil, help = nil, required = true, indent 
     direction: horizontal
     required: #{required ? "true" : "false"}
     options:
-  #{output_options(options, value)}
+    #{output_options(options, value)}
   YAML
 
   form << "    label:  #{label}\n"  if label
@@ -447,7 +447,7 @@ def checkbox(key, label, options, value = nil, help = nil, required = true, inde
     direction: horizontal
     required: #{required ? "true" : "false"}
     options:
-  #{output_options(options, value)}
+    #{output_options(options, value)}
   YAML
 
   form << "    label:  #{label}\n"  if label
@@ -465,7 +465,7 @@ def path(key, label, help = nil, required = true, indent = nil, show_files = tru
     value: #{default_dir()}
     show_files: #{show_files ? "true" : "false"}
     required: #{required ? "true" : "false"}
-  #{favorites()}
+    #{favorites()}
   YAML
 
   form << "    label:  #{label}\n"      if label
@@ -484,7 +484,7 @@ def working_dir(required)
     show_files: false
     required: #{required}
     #{favorites()}
-YAML
+  YAML
 end
 
 def exec_file(binaries, value = nil, widget = "select")
@@ -509,7 +509,8 @@ def llio(target)
     help: To reduce I/O load, the targets are transferred to the cache area by LLIO. Enabling this feature is required when using more than 7,000 nodes or 28,000 processes (Refer to <a target="_blank" href="https://www.fugaku.r-ccs.riken.jp/doc_root/en/user_guides/use_latest/LayeredStorageAndLLIO/index.html">English</a> or <a target="_blank" href="https://www.fugaku.r-ccs.riken.jp/doc_root/ja/user_guides/use_latest/LayeredStorageAndLLIO/index.html">Japanese</a> for details).
     options:
       - ["(None)", "", disable-llio_comment, disable-llio_exec_file_transfer, disable-llio_file_transfer, disable-llio_dir_transfer ]
-YAML
+  YAML
+
   if target == "file"
     form << "      - [\"Input file\", \"\", hide-llio_comment, hide-llio_exec_file_transfer, hide-llio_file_transfer, disable-llio_dir_transfer ]\n"
     form << "      - [\"Directory where input file exists\", \"\", hide-llio_comment, hide-llio_exec_file_transfer, disable-llio_file_transfer, hide-llio_dir_transfer ]\n"
@@ -533,7 +534,7 @@ YAML
   llio_dir_transfer:
     widget: text
     value: "/home/system/tool/dir_transfer"
-YAML
+  YAML
 
   return form
 end

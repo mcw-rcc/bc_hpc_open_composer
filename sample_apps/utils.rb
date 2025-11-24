@@ -395,7 +395,8 @@ def text(key, label, value = nil, help = nil, required = false, indent = nil)
   #{key}:
     widget: text
     required: #{required ? "true" : "false"}
-YAML
+  YAML
+
   form << "    label:  #{label}\n"  if label
   form << "    value:  #{value}\n"  if value
   form << "    help:   #{help}\n"   if help
@@ -410,8 +411,9 @@ def select(key, label, options, value = nil, help = nil, required = true, indent
     widget: select
     required: #{required ? "true" : "false"}
     options:
-#{output_options(options, value)}
-YAML
+  #{output_options(options, value)}
+  YAML
+
   form << "    label:  #{label}\n"  if label
   form << "    value:  #{value}\n"  if value
   form << "    help:   #{help}\n"   if help
